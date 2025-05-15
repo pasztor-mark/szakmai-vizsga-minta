@@ -125,7 +125,7 @@ const prisma = new PrismaService(); // PrismaService példányosítása
 async function main() {  
   
     for (let i = 0; i < SEED_AMOUNT; i++) {  
-        await prisma.books.create({  
+        const {id} = await prisma.books.create({  
             data: { // schema.prisma alapján  
                 title: f.book.title(), // faker Book modulból cím  
                 publish_year: f.number.int({ // faker Number modulból egész szám  
@@ -144,7 +144,7 @@ async function main() {
             data: {  
                 book: {  
                     connect: {  
-                        id: i // az újonnan generált könyvhöz hozzárendelünk egy rentalt  
+                        id // az újonnan generált könyvhöz hozzárendelünk egy rentalt  
                     }  
                 },  
                 start_date: f.date.recent(), // faker Date modulból egy korábbi dátum  
@@ -154,6 +154,32 @@ async function main() {
     }  
 }  
 main()
+```
+
+- Seedelés futtatása
+```json
+...
+"license": "UNLICENSED",
+// prisma szelektor és seed parancs definiálása
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  //
+  "scripts": {
+...
+```
+## FONTOS! CORS BEÁLLÍTÁS
+A frontend-backend összekötésnél CORS hibát fog dobni a frontend, ha nincs rendesen konfigurálva. A `main.tsx`-nek így kell kinéznie:
+```typescript
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.enableCors() // KÖTELEZŐ frontend és backend közötti kommunikációhoz
+  await app.listen(process.env.PORT ?? 3000);
+}
+bootstrap();
 ```
 
 - API végpontok írása

@@ -7,7 +7,7 @@ const prisma = new PrismaService(); // PrismaService példányosítása
 async function main() {
 
     for (let i = 0; i < SEED_AMOUNT; i++) {
-        await prisma.books.create({
+        const {id} = await prisma.books.create({
             data: { // schema.prisma alapján
                 title: f.book.title(), // faker Book modulból cím
                 publish_year: f.number.int({ // faker Number modulból egész szám
@@ -26,7 +26,7 @@ async function main() {
             data: {
                 book: {
                     connect: {
-                        id: i // az újonnan generált könyvhöz hozzárendelünk egy rentalt
+                        id // az újonnan generált könyvhöz hozzárendelünk egy rentalt
                     }
                 },
                 start_date: f.date.recent(), // faker Date modulból egy korábbi dátum
