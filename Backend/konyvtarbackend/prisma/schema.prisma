@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+// c) Hozza létre az adatbázis táblákhoz tartozó modell osztályokat! (Book és Rental)
+model books { // npx prisma db pull-nál automatikusan lett legenerálva
+  id           Int    @id @default(autoincrement()) //autoincrement: az ID automatikusan lesz hozzárendelve
+  title        String    @db.VarChar(255) // a könyv címe
+  author       String    @db.VarChar(255) // a könyv írója
+  publish_year Int                        // a könyv kiadási éve
+  page_count   Int                        // a könyv oldalszáma
+  created_at   DateTime? @db.Timestamp(0) // automatikusan hozzárendelt idő létrehozásnál
+  updated_at   DateTime? @db.Timestamp(0) // automatikusan hozzárendelt idő frissítésnél
+  rentals rentals[] // kapcsolat adattag
+}
+// b) Készítse el a kölcsönzéseket nyilvántartó rentals adattáblát, az alábbi oszlopokkal
+model rentals {
+  id Int @id @default(autoincrement()) //autoincrement: az ID automatikusan lesz hozzárendelve
+  book_id Int // könyv azonosító mező
+  book books @relation(fields: [book_id], references: [id]) // kapcsolatot beállító mező
+  start_date DateTime //kezdő dátum
+  end_date DateTime //vég dátum
+}
