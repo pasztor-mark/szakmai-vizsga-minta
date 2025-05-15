@@ -28,9 +28,15 @@ export class BooksService {
       throw new BadRequestException("A kiadási évnek pozitív egész számnak kell lennie.")
     }
 
+    const res = await this.prisma.books.create({
+      data: {
+        ...createBookDto // spread operátorral beilleszti a DTO-t a Prisma create metódusába
+      }
+    })
+
     return {
       statusCode: 201,
-      data: createBookDto
+      data: res // visszaadja a létrehozott könyvet
     }
   }
 
