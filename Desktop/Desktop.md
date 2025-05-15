@@ -1,3 +1,5 @@
+## Asztali
+
 ### Rövid leírás
 Komplex konzolos, valamint grafikus alkalmazás készítése C# vagy Java nyelven.
 ### Pontozás
