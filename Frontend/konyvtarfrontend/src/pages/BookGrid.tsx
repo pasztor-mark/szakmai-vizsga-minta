@@ -7,21 +7,23 @@ export default function BookGrid() {
     useEffect(() => {
         fetchBooks()
     }, [])
-    async function fetchBooks() {
-        const req = await fetch("http://localhost:3000/api/books", {
-            method: "GET",
+    async function fetchBooks() { // Könyvek lekérdezése
+        const req = await fetch("http://localhost:3000/api/books", { // aszinkron kérés az APIhoz
+            method: "GET", // HTTP metódus
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json" // KÖTELEZŐ fejléc
             }
         })
-        const res = await req.json()
-        setBooks(res.data)
+        const res = await req.json() // aszinkron JSON formátummá alakítás
+        setBooks(res.data) // JSON válasz data tömbjének beállítása
     }
    return (
         <article className="flex flex-row gap-4 flex-wrap">
         {
-            books.map((book) => (
-                <BookCard key={book.id} book={book} />
+            books.map((book) => ( // MAP függvény: végigiterál a könyvek tömbjén
+                // (item) => (...) => kijelzi a könyveket
+                // (book) => {...} => műveleteket végez a könyvekkel
+                <BookCard key={book.id} book={book} /> //visszaad egy könyv kártyát a könyv adataival
             ))
         }
         </article>

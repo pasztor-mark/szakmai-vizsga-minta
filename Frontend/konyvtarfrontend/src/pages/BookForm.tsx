@@ -9,12 +9,12 @@ export default function BookForm() {
   async function submitData() {
     const body = JSON.stringify(formData);
     console.log(body);
-    const req = await fetch("http://localhost:3000/api/books", {
-      method: "POST",
+    const req = await fetch("http://localhost:3000/api/books", { // API endpoint
+      method: "POST", // HTTP metódus
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json", // KÖTELEZŐ fejléc
       },
-      body: body,
+      body: body, // JSON formátumú adatküldés
     });
     const res = await req.json();
     if (res.statusCode !== 201) {
