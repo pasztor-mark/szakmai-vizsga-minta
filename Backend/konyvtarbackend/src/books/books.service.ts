@@ -69,23 +69,29 @@ export class BooksService {
     const nextWeek = new Date(new Date().setDate(new Date().getDate() + 7)) // hozzáad 7 napot a mai naphoz
     const isAlreadyRented = await this.prisma.rentals.findFirst({
       where: { //megkeresi, hogy a könyv ki van-e bérelve
-        AND: [
-          { // ha
-            book: {
-              id
-            }
-          },
-          {
-            end_date: {
-              gte: today // ha a mai napnál később van a visszaadási határidő
+        book: { //leszűkíti a keresést a kibérelendő elemre
+          id
+        },
+        NOT: { //HA NEM
+          OR: [ //igaz valamelyik közül legalább 1
+
+            { // ha
+              book: {
+                id
+              }
+            },
+            {
+              end_date: {
+              lt: today // ha a mai napnál korábban van a visszaadási határidő
             }
           },
           {
             start_date: {
-              lte: today // ha a mai nap előtt kezdődött
+              gt: nextWeek // ha a jövő héten bérelhető
             }
           }
         ]
+        }
       }
     })
     if (isAlreadyRented) {
