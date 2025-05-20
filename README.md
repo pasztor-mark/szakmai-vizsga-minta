@@ -2,7 +2,7 @@
 
 A repóban egy **mintavizsga** (közel) maximum pontos megoldása van, kommentekkel elmagyarázva. 
 
-- Rendelkezésre álló idő: **270 perc**  - *4 és fél óra*
+- Rendelkezésre álló idő: **240 perc**  - *4 óra* 
 - A vizsgarész súlyozásában **90%**-ot ér (a többi 10% az ágazati volt)
 
 #### Gyakorlati vizsga részei
